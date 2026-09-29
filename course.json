@@ -1,0 +1,18 @@
+{
+  "name": "Data and AI Production Readiness Programme",
+  "cohort": "2026",
+  "instructors": [
+    "shaddydevops",
+    "oliverangelil",
+    "aduuna",
+    "cyrille-feu"
+  ],
+  "project_id": "cloud-apps-ishango",
+  "project_number": "898784939110",
+  "region": "europe-west2",
+  "registry": "cloud-apps-ishango-gcr",
+  "service_prefix": "dai-prp-2026",
+  "deployment_service_account": "tf-provision@cloud-apps-ishango.iam.gserviceaccount.com",
+  "runtime_service_account": "cloud-run-service@cloud-apps-ishango.iam.gserviceaccount.com",
+  "workload_identity_provider": "projects/898784939110/locations/global/workloadIdentityPools/github/providers/github-actions-provider"
+}

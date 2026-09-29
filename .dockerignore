@@ -1,0 +1,15 @@
+__pycache__/
+.pytest_cache/
+.git
+.venv
+venv
+myvenv
+*.pyc
+__pycache__
+.DS_Store
+
+.env
+.env.*
+gha-creds-*.json
+tofu-key.json
+docs/legacy/
