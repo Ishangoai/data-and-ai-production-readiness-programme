@@ -10,7 +10,7 @@ from gradioapp.app import app as demo
 from gradioapp.heart_disease_app import heart_app
 
 app = FastAPI(
-    title="AIMS Course API",
+    title="Data and AI Production Readiness Programme API",
     description=textwrap.dedent("""
     ## Mounted Apps
     ----
@@ -34,7 +34,7 @@ def root():
     """
     Redirect the root path `/` to the Swagger UI documentation.
     """
-    return get_swagger_ui_html(openapi_url="/openapi.json", title="AIMS Course API Docs")
+    return get_swagger_ui_html(openapi_url="/openapi.json", title=" Docs")
 
 
 @app.get("/hello", summary="Greet the user", description="Returns a greeting message.")
