@@ -1,79 +1,131 @@
 # Data and AI Production Readiness Programme
 
-Ishangoai · 2026 cohort · Lead instructor: `shaddydevops`
+**Ishango.ai Â· 2026 Cohort**
 
-A refreshed copy of the previous AIMS course. Reference lessons, sample model and
-locked Python dependencies are retained. Previous students' submissions remain in
-the original repository; this copy starts with `src/students/example` only.
+Build, test and deploy data and AI applications using practical software engineering
+workflows. This programme connects Python development, data pipelines, machine
+learning and AI agents with the tools used to deliver applications in the cloud.
 
-## Instructor setup
+Learning is hands-on: develop in your own workspace, test your changes, collaborate
+through pull requests and deploy working services.
 
-Read [SETUP.md](SETUP.md) before the first deployment. The application uses the
-existing `cloud-apps-ishango` project and registry in `europe-west2`. No OpenTofu
-workflow is active here. The old infrastructure and workflow files are retained
-under `docs/legacy` for reference only.
+## What you will learn
 
-## Student workflow
+- Build REST APIs with FastAPI and interactive applications with Gradio.
+- Package applications with Docker and manage Python dependencies with uv.
+- Use Git, code review, automated checks and CI/CD in a shared development workflow.
+- Build data pipelines and data-quality checks with Dagster.
+- Track machine-learning experiments and manage models with MLflow.
+- Develop LLM applications and tool-using agents with Gemini, LangChain and LangGraph.
+- Deploy containerised applications to Google Cloud Run.
 
-1. Accept your invitation as a collaborator on this repository. Use a branch in
-   this repository, not a fork, for this cohort's deployment workflow.
-2. Create `feature-branch-YOUR-GITHUB-USERNAME` from `development` and open that
-   branch in GitHub Codespaces with the smallest available machine.
-3. Wait for dependency installation. In the terminal run:
+## Before you begin
 
-   ```bash
-   python scripts/new_student.py YOUR-GITHUB-USERNAME
-   ```
+You should be comfortable with Python functions, modules and basic data handling.
+You will need a GitHub account and access to this repository. GitHub Codespaces
+provides the course development environment; its setup installs the project dependencies.
 
-4. Only edit `src/students/YOUR-GITHUB-USERNAME/`. Use the exact capitalization of
-   your GitHub login when creating the folder.
-5. Run your API from the repository root:
+## Getting started
 
-   ```bash
-   PYTHONPATH=src/students/YOUR-GITHUB-USERNAME uv run --locked uvicorn api.main:app --host 0.0.0.0 --port 8080
-   ```
+### 1. Create your working branch
 
-6. In Codespaces, use the Ports tab to open port 8080. Visit `/hello`, `/docs`,
-   `/gradio/` and `/heart-disease/`. The sample heart model is a teaching artifact.
-7. Run `uv run --locked ruff check` and `uv run --locked pytest` before committing.
-8. Push your branch and open a pull request into `development`. An instructor
-   reviews and merges it. When deployment is enabled, the merged PR deploys your
-   application as `dai-prp-2026-YOUR-LOWERCASE-GITHUB-USERNAME`.
+Accept your repository invitation. Create a branch from `development` named:
 
-## Instructor example
-
-```bash
-PYTHONPATH=src/students/example uv run --locked uvicorn api.main:app --host 0.0.0.0 --port 8080
+```text
+feature-branch-YOUR-GITHUB-USERNAME
 ```
 
-The API starts without Gemini or search credentials. `/llm-chat/` is only mounted
-when `ENABLE_AI=true`. For local AI lessons, configure `GOOGLE_API_KEY` and
-`GOOGLE_CSE_ID` as Codespaces secrets, then set `ENABLE_AI=true`. Do not put values
-in committed files. The current example uses one key for Gemini and Custom Search;
-that key must be accepted by both APIs. Model/search availability needs a live pilot.
+Open that branch in GitHub Codespaces using the smallest available machine, then
+wait for the environment setup to finish. Use branches within this repository
+for the course submission and deployment workflow.
 
-## Data and ML lessons
+### 2. Create your student workspace
+
+Run this command from the repository root, replacing `YOUR-GITHUB-USERNAME` with
+your exact GitHub login, including its capitalization:
 
 ```bash
-bash run_dagster.sh example
-# Students:
+python scripts/new_student.py YOUR-GITHUB-USERNAME
+```
+
+Your workspace will be created at `src/students/YOUR-GITHUB-USERNAME/`.
+Keep your assignment changes inside that folder. The `example` folder contains
+reference implementations for the lessons.
+
+### 3. Start your application
+
+In the Codespaces terminal, run:
+
+```bash
+PYTHONPATH=src/students/YOUR-GITHUB-USERNAME uv run --locked uvicorn api.main:app --host 0.0.0.0 --port 8080
+```
+
+Open port **8080** from the **Ports** tab.
+
+| Path | Application |
+| --- | --- |
+| `/hello` | Introductory API endpoint |
+| `/docs` | Interactive API documentation |
+| `/gradio/` | Gradio demonstration |
+| `/heart-disease/` | Machine-learning prediction demonstration |
+
+The prediction demonstration is a teaching exercise. The introductory API runs
+without AI credentials; the instructor will provide configuration guidance for
+AI-enabled lessons.
+
+### 4. Check your work
+
+```bash
+uv run --locked ruff check
+uv run --locked pytest
+```
+
+Ruff checks code quality. Pytest runs the configured tests. Add tests for your own
+application behaviour as you work through the assignments.
+
+### 5. Submit for review
+
+Commit and push your branch, then open a pull request into `development`.
+Explain what you changed and how you tested it. Resolve any failed checks and
+respond to your instructor's review.
+
+When course deployment is enabled, a merged student pull request deploys that
+student's application to its own Cloud Run service. The deployment workflow prints
+the application URL in GitHub Actions.
+
+## Data pipelines and experiment tracking
+
+Start the services for your workspace:
+
+```bash
 bash run_dagster.sh YOUR-GITHUB-USERNAME
 ```
 
-Open port 3000 for Dagster and 5000 for MLflow. The launcher uses explicit module
-paths. ERA5 ingestion needs `CDS_API_KEY` and the relevant Copernicus access/terms.
-The original aggregation lesson sends a Slack message and needs
-`SLACK_AIMS_COURSE_BOT_TOKEN`. Its old channel `aims_course_october2025` is retained;
-update it to the agreed cohort channel before running that lesson. These integrations
-are not required for the introductory API pilot.
+Use port **3000** for Dagster and **5000** for MLflow. To explore the reference
+pipeline instead, run `bash run_dagster.sh example`.
 
-The inherited pytest configuration tests the shared examples, not every student's
-individual implementation. Add assignment-specific tests as the course progresses.
-Runtime registration data in the API is in memory; it is not a persistent database.
+Lessons that retrieve external data or use integrations require additional
+configuration. Your instructor will guide you through these before the relevant lab.
 
-## Maintenance
+## Repository guide
 
-`course.json` contains instructor logins and cloud connection metadata (no secrets).
-Keep `uv.lock` committed. The package's historical internal name is retained to
-avoid changing the dependency baseline. Review [REFRESH_NOTES.md](REFRESH_NOTES.md)
-for the scope and remaining live checks.
+| Location | Purpose |
+| --- | --- |
+| `src/students/example/` | Reference APIs, applications, pipelines and agents |
+| `src/students/<username>/` | Individual student work |
+| `tests/` | Shared tests |
+| `scripts/` | Workspace setup and deployment helpers |
+| `.github/workflows/` | Automated checks and application deployment |
+| `course.json` | Course configuration |
+| `pyproject.toml` and `uv.lock` | Python project settings and dependency versions |
+
+## Working together
+
+- Keep changes focused and use descriptive commit messages.
+- Test your application before requesting a review.
+- Keep credentials out of code and commits; use the configuration provided for each lab.
+- Report problems with the command you ran, the error message and the relevant file.
+
+**Lead instructor:** [Shadrack Darku](https://github.com/shaddydevops)
+
+Instructor configuration and deployment instructions are in [SETUP.md](SETUP.md).
